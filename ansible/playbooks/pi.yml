@@ -1,0 +1,62 @@
+- name: Configure Raspberry Pi nodes
+  hosts: pi
+  become: true
+
+  tasks:
+    - name: Ensure journald drop-in directory exists
+      ansible.builtin.file:
+        path: /etc/systemd/journald.conf.d
+        state: directory
+        mode: "0755"
+
+    - name: Keep systemd journal in RAM only
+      ansible.builtin.copy:
+        dest: /etc/systemd/journald.conf.d/10-volatile.conf
+        content: |
+          [Journal]
+          Storage=volatile
+          RuntimeMaxUse=64M
+        mode: "0644"
+      notify: Restart journald
+
+    - name: Mount /tmp as tmpfs
+      ansible.posix.mount:
+        path: /tmp
+        src: tmpfs
+        fstype: tmpfs
+        opts: defaults,noatime,nosuid,nodev,mode=1777,size=1G
+        state: present # writes fstab only; takes effect on reboot
+      notify: Reboot
+
+    - name: Stop and disable SD card swapfile
+      ansible.builtin.systemd:
+        name: dphys-swapfile
+        state: stopped
+        enabled: false
+      register: swap_service
+      failed_when: >-
+        swap_service.failed and
+        'Could not find the requested service' not in (swap_service.msg | default(''))
+
+    - name: Remove swapfile from SD card
+      ansible.builtin.file:
+        path: /var/swap
+        state: absent
+
+    - name: Enable memory cgroup for k3s
+      ansible.builtin.lineinfile:
+        path: /boot/firmware/cmdline.txt
+        backrefs: true
+        regexp: '^((?!.*\bcgroup_enable=memory\b).*\broot=.*)$'
+        line: '\1 cgroup_memory=1 cgroup_enable=memory'
+      notify: Reboot
+
+  handlers:
+    - name: Restart journald
+      ansible.builtin.systemd:
+        name: systemd-journald
+        state: restarted
+
+    - name: Reboot
+      ansible.builtin.reboot:
+        reboot_timeout: 900 # the SD card has stalled during boot before

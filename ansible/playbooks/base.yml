@@ -1,0 +1,58 @@
+- name: Configure all nodes
+  hosts: all:!proxmox
+  become: true
+
+  tasks:
+    - name: Ensure admin user exists
+      ansible.builtin.user:
+        name: isaac
+        shell: /bin/bash
+        groups: sudo
+        append: true
+
+    - name: Add SSH key for admin user
+      ansible.posix.authorized_key:
+        user: isaac
+        key: "{{ lookup('ansible.builtin.file', '~/.ssh/id_ed25519.pub') }}"
+
+    - name: Allow admin user passwordless sudo
+      ansible.builtin.copy:
+        content: "isaac ALL=(ALL) NOPASSWD:ALL\n"
+        dest: /etc/sudoers.d/isaac
+        mode: "0440"
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: Set timezone
+      community.general.timezone:
+        name: America/Phoenix
+
+    - name: Install packages
+      ansible.builtin.apt:
+        name:
+          - curl
+          - vim
+          - chrony
+          - htop
+          - jq
+          - git
+          - tmux
+          - rsync
+          - ca-certificates
+          - unattended-upgrades
+        state: present
+        update_cache: true
+        cache_valid_time: 86400
+
+    - name: Enable unattended security upgrades
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/20auto-upgrades
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unattended-Upgrade "1";
+        mode: "0644"
+
+    - name: Ensure chrony is running and enabled
+      ansible.builtin.systemd:
+        name: chrony
+        state: started
+        enabled: true
