@@ -3,10 +3,10 @@
   become: true
 
   tasks:
-      - name: Install packages
-        ansible.builtin.apt:
-          name:
-            - prometheus-node-exporter
-          state: present
-          update_cache: true
-          cache_valid_time: 86400
+    - name: Install packages
+      ansible.builtin.apt:
+        name:
+          - prometheus-node-exporter
+        state: present
+        update_cache: true
+        cache_valid_time: 86400

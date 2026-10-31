@@ -1,0 +1,102 @@
+- name: Configure k3s server nodes
+  hosts: k3s_server:k3s_agents
+  become: true
+
+  tasks:
+    - name: Ensure k3s config directory exists
+      ansible.builtin.file:
+        path: /etc/rancher/k3s
+        state: directory
+        mode: '0755'
+
+    - name: Copy over the server config file
+      when: inventory_hostname in groups['k3s_server']
+      ansible.builtin.template:
+        src: cp_k3s_config.yaml.j2
+        dest: /etc/rancher/k3s/config.yaml
+        mode: '0600'
+      notify: Restart k3s
+
+    - name: Copy over the agents config file
+      when: inventory_hostname in groups['k3s_agents']
+      ansible.builtin.template:
+        src: w_k3s_config.yaml.j2
+        dest: /etc/rancher/k3s/config.yaml
+        mode: '0600'
+      notify: Restart k3s-agent
+
+    - name: Check installed k3s version
+      ansible.builtin.command: k3s --version
+      register: k3s_installed
+      changed_when: false
+      failed_when: false
+
+    - name: Install k3s with the install script
+      when: k3s_installed.rc != 0 or k3s_version not in k3s_installed.stdout
+      block:
+        - name: Download k3s installer script
+          ansible.builtin.get_url:
+            url: https://get.k3s.io
+            dest: /usr/local/bin/k3s-install.sh
+            mode: '0755'
+        - name: Install k3s server
+          ansible.builtin.command:
+            cmd: /usr/local/bin/k3s-install.sh
+          environment:
+            INSTALL_K3S_VERSION: "{{ k3s_version }}"
+            INSTALL_K3S_EXEC: server
+          when: inventory_hostname in groups['k3s_server']
+          changed_when: true
+        - name: Install k3s agent
+          ansible.builtin.command:
+            cmd: /usr/local/bin/k3s-install.sh
+          environment:
+            INSTALL_K3S_VERSION: "{{ k3s_version }}"
+            INSTALL_K3S_EXEC: agent
+          when: inventory_hostname in groups['k3s_agents']
+          changed_when: true
+
+    - name: Ensure k3s is enabled and running
+      ansible.builtin.systemd:
+        name: k3s
+        state: started
+        enabled: true
+      when: inventory_hostname in groups['k3s_server']
+
+    - name: Ensure k3s-agent is enabled and running
+      ansible.builtin.systemd:
+        name: k3s-agent
+        state: started
+        enabled: true
+      when: inventory_hostname in groups['k3s_agents']
+
+  handlers:
+    - name: Restart k3s
+      ansible.builtin.systemd_service:
+        name: k3s
+        state: restarted
+        daemon_reload: true
+
+    - name: Restart k3s-agent
+      ansible.builtin.systemd_service:
+        name: k3s-agent
+        state: restarted
+        daemon_reload: true
+
+- name: Put the cluster context on my desktop
+  hosts: k3s_server
+
+  tasks:
+    - name: Read kubeconfig from server
+      ansible.builtin.slurp:
+        src: /etc/rancher/k3s/k3s.yaml
+      register: k3s_kubeconfig
+
+    - name: Write kubeconfig on desktop
+      ansible.builtin.copy:
+        content: "{{ k3s_kubeconfig.content | b64decode | replace('127.0.0.1', '192.168.8.20') | replace('default', 'homelab') }}"
+        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.kube/config"
+        mode: "0600"
+      delegate_to: localhost
+      become: false
+      diff: false

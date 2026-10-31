@@ -6,6 +6,8 @@
 *.tfvars
 *.tfvars.json
  
+.ansible/
+
 kubeconfig
 kubeconfig*
 *.kubeconfig

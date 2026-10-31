@@ -1,0 +1,11 @@
+token: {{ k3s_token }}
+
+server: https://192.168.8.20:6443
+
+{% if inventory_hostname == "pi01" %}
+node-label:
+  - "storage=sdcard"
+node-taint:
+  - "sdcard=true:PreferNoSchedule"
+{% endif %}
+
