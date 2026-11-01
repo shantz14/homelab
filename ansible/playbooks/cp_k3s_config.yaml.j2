@@ -6,4 +6,5 @@ tls-san:
 secrets-encryption: true
 node-taint:
   - "node-role.kubernetes.io/control-plane:NoSchedule"
-
+disable:
+  - servicelb
