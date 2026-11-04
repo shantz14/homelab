@@ -1,6 +1,6 @@
 locals {
   vms = {
-    "k3s-cp1" = { vm_id = 120, ip = "192.168.8.20", cores = 2, memory = 4096, disk = 40 }
+    "k3s-cp1" = { vm_id = 120, ip = "192.168.8.20", cores = 2, memory = 8192, disk = 40 }
     "k3s-w1"  = { vm_id = 121, ip = "192.168.8.21", cores = 6, memory = 16384, disk = 60 }
   }
   gateway_ip = "192.168.8.1"

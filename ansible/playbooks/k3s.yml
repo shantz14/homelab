@@ -17,6 +17,15 @@
         mode: '0600'
       notify: Restart k3s
 
+    - name: Copy over the traefik config file
+      when: inventory_hostname in groups['k3s_server']
+      ansible.builtin.copy:
+        src: traefik-config.yaml
+        dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
+        mode: '0600'
+        owner: root
+      notify: Restart k3s
+
     - name: Copy over the agents config file
       when: inventory_hostname in groups['k3s_agents']
       ansible.builtin.template:
