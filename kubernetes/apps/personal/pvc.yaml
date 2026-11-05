@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: personal-pvc
   namespace: personal
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   storageClassName: local-path
   accessModes:
