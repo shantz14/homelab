@@ -8,4 +8,5 @@ node-label:
 node-taint:
   - "sdcard=true:PreferNoSchedule"
 {% endif %}
-
+kubelet-arg:
+  - "resolv-conf=/etc/rancher/k3s/resolv.conf"

@@ -83,7 +83,7 @@ resource "proxmox_virtual_environment_vm" "k3s" {
     }
 
     dns {
-      domain  = "lab.home"
+      domain = "lab.home"
       servers = [local.gateway_ip]
     }
 

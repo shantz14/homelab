@@ -8,3 +8,5 @@ node-taint:
   - "node-role.kubernetes.io/control-plane:NoSchedule"
 disable:
   - servicelb
+kubelet-arg:
+  - "resolv-conf=/etc/rancher/k3s/resolv.conf"

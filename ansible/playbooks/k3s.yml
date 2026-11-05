@@ -9,6 +9,13 @@
         state: directory
         mode: '0755'
 
+    - name: Write a resolv.conf for the kubelet (no search domains)
+      ansible.builtin.copy:
+        dest: /etc/rancher/k3s/resolv.conf
+        content: |
+          nameserver 192.168.8.1
+        mode: '0644'
+
     - name: Copy over the server config file
       when: inventory_hostname in groups['k3s_server']
       ansible.builtin.template:
