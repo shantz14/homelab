@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-deployment
+  namespace: personal
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: personal-site
+  template:
+    metadata:
+      labels:
+        app: personal-site
+    spec:
+      containers:
+        - name: personal-container
+          image: ghcr.io/shantz14/personal:v1
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BASE_URL
+              value: https://isaacschwarz.dev
+          envFrom:
+            - secretRef:
+                name: github-oauth
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: personal-pvc

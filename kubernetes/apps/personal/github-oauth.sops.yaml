@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: github-oauth
+    namespace: personal
+stringData:
+    GITHUB_CLIENT_ID: ENC[AES256_GCM,data:irU9pSO2pfFvg2bBKceKme3s7sY=,iv:WkD3/q7wU58LU3glBftdbH6sjnXM8b8JP4rVyzStN6k=,tag:nqwA6EVnbAqqHVhhuIlYUg==,type:str]
+    GITHUB_CLIENT_SECRET: ENC[AES256_GCM,data:PpS6Iu0SS8x2WJe5Sbd9nV4qLwxb4iKgOvFh+jd7myeJ/s0sMeELYg==,iv:wQHNC2Q2XlcbeiKJydOwKCrkk/wfpl4JSPbnXpYDyv0=,tag:cAiQitAbpFzG2me5UhcUlg==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuM2tRcXE4SjVOeU9xclo4
+            cWd4YnlPNUh5NVQwdUIrRHNTMnROM0g0dEJNClZtQkpzR0k1TmxvUE90Z0ZJN2pn
+            eDFBOTFaUVVRamY2YmRnS0hzMytZUm8KLS0tIFRlaDR2MlM3UnZQQVpnUktXRUxq
+            YllSdFZIbjFiWTJsSE5XOURNcnNzTW8KzDtC9DEQV+dUestSlpO6TLARBKNWCZ2H
+            +6rX6ymMA5sDH3LmsUSoDtJv8Z9NTiaQvplWAomwDRdj1z9qMNWLSA==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age15fnakreare0w3490xpafffruk9jegm0kq5sdl84e07kz7k45gexsue3hg3
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-11-05T00:05:32Z"
+    mac: ENC[AES256_GCM,data:B5kdPhyhEs45jdIDE8lvWCoUP7cKA3ZrWGKTGBgA9389/rdMI2a9eDrS2YtW8MrZjLcf43BNMdYr5WKAhno6EkcqhsZQRv3hGCh+MnrBZdCAgjzw8e1Nt/242WinwcRwdIv4sx9UwznJTv2VX8yVuuvsOiza1wY5sPE2nztT6MM=,iv:eIBTVblYEPsrrk54zSfHLmWNTGn409G2xpwq1k6SdSo=,tag:YtJxTFGm3HdT6b4fpvgmig==,type:str]
+    version: 3.13.3
