@@ -1,4 +1,4 @@
-# Proxmox and k3s personal infrastructure.
+# Personal infrastructure.
 
 Terraform, Ansible, Flux, Prometheus
 
