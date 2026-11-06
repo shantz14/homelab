@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: personal-container
-          image: ghcr.io/shantz14/personal:v2.3
+          image: ghcr.io/shantz14/personal:v2.4
           volumeMounts:
             - name: data
               mountPath: /data
