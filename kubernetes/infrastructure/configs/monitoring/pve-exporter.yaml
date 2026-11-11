@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pve-exporter
+  namespace: prometheus-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pve-exporter
+  template:
+    metadata:
+      labels:
+        app: pve-exporter
+    spec:
+      containers:
+        - name: pve-exporter
+          image: prompve/prometheus-pve-exporter:3.11.0
+          ports:
+            - name: metrics
+              containerPort: 9221
+          volumeMounts:
+            # The image reads /etc/prometheus/pve.yml by default.
+            - name: config
+              mountPath: /etc/prometheus
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /
+              port: metrics
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+      volumes:
+        - name: config
+          secret:
+            secretName: pve-exporter
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pve-exporter
+  namespace: prometheus-system
+spec:
+  selector:
+    app: pve-exporter
+  ports:
+    - name: metrics
+      port: 9221
+      targetPort: metrics

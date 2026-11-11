@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: pve-exporter
+    namespace: prometheus-system
+stringData:
+    pve.yml: ENC[AES256_GCM,data:FlOaKuiztjwM5d+jvhcwQzx/nWav64c9I2tSOIFig6qsKLXP691/3RR5QTS0pqXcO3UEf06geM4XxAHAoFNPdURKfxyn6GNTcMDNYvBTNUn2XeUwQzjErqBI+ruRqosw6GQQFNQ9ot3NUR/1p2pcQo/zVIKTAY4iHoAOMV3TYL5s,iv:tByC0wjn/8/udbieBxxjZpnRBQhFbCn/1w/s5Ub2bXI=,tag:oi9VvGtj1LW19nA2sz1IQg==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5d0hkRU1TdVRJcGZaTG41
+            VWduRzRPd2pJVy9aa1FPelIraU5EMlIraFNVCm5taVZsY09acjlYNzNIM3FGQnVq
+            WERMdkZSNVpsY21tbFpGeC8rZkdnNkEKLS0tIEF2cU1kYkpUYStubC82WE5yZCs2
+            L0tCWjhacnBTNENCTXVKN2JaTUFzS1EKeIY8LYIkx4KtztiESI1fEK+y5lFz6i3Q
+            hX3Jjvkvb2Gzr+ynEiczJTu8IQLay891KpqGAf4JrQ+Ls9a+/OwqLQ==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age15fnakreare0w3490xpafffruk9jegm0kq5sdl84e07kz7k45gexsue3hg3
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-11-11T02:57:02Z"
+    mac: ENC[AES256_GCM,data:NnZe6GE4TPMXx0bu5ipZMpq8sSCIwRyZci3vaqN/i/cGgDD+0Sv+dOSStgy7KYM2uK4u3zIO3PgdLuVsfTz1Aletez6k1Yz9rBIZBuLD7ga4iQ+FfqWNbGnQf49AFJC3cSvHKQNWy+yTjXYw6Yortqpxsfd6cbFnDUJFFtP3EPM=,iv:jN+jS9pkJkBA7y4evnusYM9P6DeeSYH4Qhzxja4u6dE=,tag:t+TzOIqePyDr7JiSC/PzkA==,type:str]
+    version: 3.13.3

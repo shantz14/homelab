@@ -1,0 +1,29 @@
+# pve01 is not a cluster node, so Prometheus scrapes it through static targets.
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: pve01-node
+  namespace: prometheus-system
+spec:
+  staticConfigs:
+    - targets: ["192.168.8.10:9100"]
+      labels:
+        instance: pve01
+        # Same job as the in-cluster node-exporter, so the chart's node dashboards and alerts include pve01.
+        job: node-exporter
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: pve01-pve
+  namespace: prometheus-system
+spec:
+  metricsPath: /pve
+  params:
+    target: ["192.168.8.10"]
+    cluster: ["1"]
+    node: ["1"]
+  staticConfigs:
+    - targets: ["pve-exporter.prometheus-system.svc:9221"]
+      labels:
+        instance: pve01
