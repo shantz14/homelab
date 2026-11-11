@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: alertmanager-discord
+    namespace: prometheus-system
+stringData:
+    webhook-url: ENC[AES256_GCM,data:i/BfmdGJr2JyjVsH5e7ZUaigGDi9GKc6FyXXnnAgpd4M2DGIBYeKSrxpGeTMuXkt39YyFKpumJYbKLBPPm5QKnbwKFTGh3Vzbd4ZVAx2+mFvluNTWqbzxF64Bh+4ZFm+nfVCyzmnm/QOZuoxJic4kKZ1YIfWxH3E3g==,iv:qbCeIsaq0Qg0LqzVCkTvfAycmygATeyiovXxJXLHhxU=,tag:v+0oN3XKT0Afz8HUnNWE0w==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBkSVVCWXZzVXQ4MXUwcTRL
+            SyszTk5BRGNoS0lvcVVGcnZyZUg3UFowNkg0ClQ2SWltd05HLzlIbDl0eHp0VzBx
+            UHNTajYwaXhLWEoyOXdCUEg1Mlo0NFUKLS0tIFdoMzNOYnk4T2FnZlB3YWhicy9K
+            ald0QVNhUHB3N1FORkFYTitDQ3FwVzAKyuEYCgn19l0kIJJ90fxfbfEuHGIAd78+
+            99/NQLdr0QEWuOb4nWJ9Ag1a9hcRqhB9xRF264S5wsYS6UvR5Dtppw==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age15fnakreare0w3490xpafffruk9jegm0kq5sdl84e07kz7k45gexsue3hg3
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-11-11T03:11:39Z"
+    mac: ENC[AES256_GCM,data:RlrKSy/T8l0+Bl6TR53uxJ2SzuZ78tUU+6ZCLlqPK3fqIUjaiMyaITms148XcI6ks8xm0PMSNGyl7MpQ9JqiY87kHHWLFC5DK+d7gAqxI/f1Ai96rqX7jp4E7cYyqFBe7+x/UCIgHxtsH87TeWHTR0pwMczGHGPTsrViolFxLZY=,iv:DpA2atzSYYkI0CXEiVKloofUjNXdqLPQsSvENNNy5rk=,tag:6y3tjlyW1kXAwGwsOVhx1w==,type:str]
+    version: 3.13.3
