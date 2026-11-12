@@ -7,7 +7,7 @@ locals {
   node_name = "pve01"
 }
 
-# Cloud-init snippet that installs the guest agent on first boot
+# cloud-init snippet
 resource "proxmox_virtual_environment_file" "guest_agent" {
   content_type = "snippets"
   datastore_id = "local"

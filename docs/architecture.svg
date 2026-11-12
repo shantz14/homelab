@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 110 1600 870" width="1600" height="870" font-family="Inter, 'Noto Sans', 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="a-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <style>
+      .box   { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .title { font-size: 26px; font-weight: 700; fill: #0f172a; }
+      .body  { font-size: 20px; fill: #475569; }
+      .lbl   { font-size: 19px; font-weight: 600; }
+      .line  { fill: none; stroke-width: 3.5; }
+    </style>
+  </defs>
+
+  <rect y="110" width="1600" height="870" fill="#ffffff"/>
+
+
+  <!-- Top row -->
+  <rect class="box" x="120" y="160" width="340" height="110" rx="14"/>
+  <text class="title" x="146" y="204">Workstation</text>
+  <text class="body" x="146" y="240">Terraform · Ansible · kubectl</text>
+
+  <rect class="box" x="630" y="160" width="340" height="110" rx="14"/>
+  <text class="title" x="656" y="204">GitHub repo</text>
+  <text class="body" x="656" y="240">single source of truth</text>
+
+  <rect class="box" x="1140" y="160" width="340" height="110" rx="14"/>
+  <text class="title" x="1166" y="204">Cloudflare</text>
+  <text class="body" x="1166" y="240">public visitors</text>
+
+  <!-- Cluster -->
+  <rect x="80" y="340" width="1440" height="590" rx="20" fill="#eff5ff" stroke="#93b4f5" stroke-width="2"/>
+  <text x="106" y="378" font-size="20" font-weight="700" fill="#334155" letter-spacing="0.5">K3S CLUSTER</text>
+
+  <rect class="box" x="630" y="410" width="340" height="110" rx="14"/>
+  <text class="title" x="656" y="454">Flux</text>
+  <text class="body" x="656" y="490">deploys every git push</text>
+
+  <rect class="box" x="1140" y="410" width="340" height="110" rx="14"/>
+  <text class="title" x="1166" y="454">Traefik</text>
+  <text class="body" x="1166" y="490">routes traffic by hostname</text>
+
+  <rect class="box" x="630" y="580" width="340" height="110" rx="14"/>
+  <text class="title" x="656" y="624">Monitoring</text>
+  <text class="body" x="656" y="660">Prometheus · Grafana · alerts</text>
+
+  <rect class="box" x="1140" y="580" width="340" height="110" rx="14"/>
+  <text class="title" x="1166" y="624">Apps</text>
+  <text class="body" x="1166" y="660">public + private (Tailscale)</text>
+
+  <!-- Nodes -->
+  <rect x="120" y="760" width="680" height="130" rx="14" fill="#ffffff" stroke="#64748b" stroke-width="2"/>
+  <text class="title" x="146" y="808">Proxmox VMs</text>
+  <text class="body" x="146" y="846">control plane + worker · amd64</text>
+
+  <rect x="840" y="760" width="640" height="130" rx="14" fill="#ffffff" stroke="#64748b" stroke-width="2"/>
+  <text class="title" x="866" y="808">Raspberry Pi 5</text>
+  <text class="body" x="866" y="846">worker · arm64</text>
+
+  <!-- Blue: git and provisioning -->
+  <path class="line" stroke="#2563eb" d="M460,215 H624" marker-end="url(#a-blue)"/>
+  <text class="lbl" fill="#2563eb" x="545" y="200" text-anchor="middle">git push</text>
+
+  <path class="line" stroke="#2563eb" d="M800,270 V404" marker-end="url(#a-blue)"/>
+  <text class="lbl" fill="#2563eb" x="816" y="318">pulls changes</text>
+
+  <path class="line" stroke="#2563eb" d="M290,270 V754" marker-end="url(#a-blue)"/>
+  <text class="lbl" fill="#2563eb" x="306" y="560">provisions</text>
+  <text class="lbl" fill="#2563eb" x="306" y="584">the machines</text>
+
+  <!-- Orange: public traffic -->
+  <path class="line" stroke="#ea580c" d="M1310,270 V404" marker-end="url(#a-orange)"/>
+  <text class="lbl" fill="#ea580c" x="1326" y="318">Cloudflare Tunnel</text>
+
+  <path class="line" stroke="#ea580c" d="M1310,520 V574" marker-end="url(#a-orange)"/>
+</svg>
