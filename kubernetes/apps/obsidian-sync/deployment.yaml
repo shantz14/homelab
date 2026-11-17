@@ -24,6 +24,17 @@ spec:
                   - key: storage
                     operator: NotIn
                     values: ["sdcard"]
+      # CouchDB's entrypoint chowns everything under /opt/couchdb and exits if it can't,
+      # so the read-only ConfigMap is copied into a writable emptyDir instead of mounted directly.
+      initContainers:
+        - name: copy-config
+          image: couchdb:3.5.3
+          command: ["sh", "-c", "cp /config/*.ini /local.d/"]
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: local-d
+              mountPath: /local.d
       containers:
         - name: couchdb
           image: couchdb:3.5.3
@@ -36,9 +47,8 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /opt/couchdb/data
-            - name: config
-              mountPath: /opt/couchdb/etc/local.d/00-livesync.ini
-              subPath: 00-livesync.ini
+            - name: local-d
+              mountPath: /opt/couchdb/etc/local.d
           readinessProbe:
             httpGet:
               path: /_up
@@ -64,3 +74,5 @@ spec:
         - name: config
           configMap:
             name: couchdb-config
+        - name: local-d
+          emptyDir: {}

@@ -5,7 +5,7 @@ metadata:
   namespace: obsidian-sync
 data:
   # Settings the Self-hosted LiveSync plugin requires.
-  # Named 00- so CouchDB's own runtime config writes go to docker.ini, not this read-only mount.
+  # Named 00- so CouchDB's own runtime config writes go to docker.ini, which sorts after it.
   00-livesync.ini: |
     [couchdb]
     single_node = true
