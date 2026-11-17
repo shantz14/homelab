@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: couchdb-admin
+    namespace: obsidian-sync
+stringData:
+    COUCHDB_USER: ENC[AES256_GCM,data:FNGSQKswMYk=,iv:r2bV+VyBAGn5tNktsJGeEYggfN5NSs6MGQl7imN6WpE=,tag:DW22Hw7lBxbr+ntzM0jnYA==,type:str]
+    COUCHDB_PASSWORD: ENC[AES256_GCM,data:G0OoqbQoPQMAXClDMwicfn5FdnsDv+8NpMxMSEfsLqc=,iv:OsoWgENGj2dmmj5ldiMeZ/r1oCTH5Q8XigfBOPkHRYs=,tag:eTITzNfFJNBZdm9H2MT1VA==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5MHV4WkpadkxnYXplWTd4
+            Y3Y5YVA1QmtqR0JFSXVFMXVFNFA3SDQ3TVVzCjNBSDE1VmcxYktySVUrcUpPM2Nu
+            aU9wVkpHWDJ0VUNnMXIwQ2MwcUtGTHcKLS0tIDBlL2tWZWk0Vmk3Tjdabktabk1w
+            MThyN2d6UXZxMUNtS1F1dFBoWHNkT00KNaL31VqleXubjLREDGfedLqtogY+dQwB
+            bLt0qZqVWM/As5LS0n+XfBQkO7jCayF0Ffc7PGsWanLG/S/Ap9ygdQ==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age15fnakreare0w3490xpafffruk9jegm0kq5sdl84e07kz7k45gexsue3hg3
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-11-17T01:46:31Z"
+    mac: ENC[AES256_GCM,data:jrdDCOLQkHMI4cbi7gkxW3HM6eEv2kfurwA/vIYlxrVXkdb83tfg2j1luO81f/6u5A2zxjmEwvMXIQ3zURhgW9XkWD0IgS1wkiCtUKBmTZ9HhJ6GNK0MNsoMh9oX2sEf2Htpqq4MzyiHjmeqyvWhZ+/WIZ7KpYR0qEs2f23if2U=,iv:Z0jXaKSZnCXtS0rWzS6m2w+Gwg1mTI2b3a+gfkhlgQY=,tag:KZXTQuWbHWdhZxsZ97Wj3A==,type:str]
+    version: 3.13.3

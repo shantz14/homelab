@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: couchdb
+  namespace: obsidian-sync
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: couchdb
+  template:
+    metadata:
+      labels:
+        app: couchdb
+    spec:
+      # Keep the database (and its local-path volume) off the Pi's SD card.
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: storage
+                    operator: NotIn
+                    values: ["sdcard"]
+      containers:
+        - name: couchdb
+          image: couchdb:3.5.3
+          envFrom:
+            - secretRef:
+                name: couchdb-admin       # provides COUCHDB_USER, COUCHDB_PASSWORD
+          ports:
+            - name: http
+              containerPort: 5984
+          volumeMounts:
+            - name: data
+              mountPath: /opt/couchdb/data
+            - name: config
+              mountPath: /opt/couchdb/etc/local.d/00-livesync.ini
+              subPath: 00-livesync.ini
+          readinessProbe:
+            httpGet:
+              path: /_up
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /_up
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: couchdb-data
+        - name: config
+          configMap:
+            name: couchdb-config

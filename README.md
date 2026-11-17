@@ -18,3 +18,7 @@ The lab sits on its own subnet, behind a GL.iNet Beryl AX in.
 - **Ingress:** all HTTP goes through **Traefik**, which routes by hostname.
 - **Public (`*.isaacschwarz.dev`):** a **Cloudflare Tunnel** (2 `cloudflared` replicas in the cluster) forwards traffic to Traefik.
 - Ingress hosts on `lab.home` are private; one on `isaacschwarz.dev` are public.
+
+## Apps
+- **personal:** isaacschwarz.dev
+- **obsidian-sync:** CouchDB backing Obsidian Self-hosted LiveSync, see [docs/obsidian-sync.md](docs/obsidian-sync.md)
