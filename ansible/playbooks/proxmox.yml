@@ -10,3 +10,17 @@
         state: present
         update_cache: true
         cache_valid_time: 86400
+
+    # Consumer hardware with no BMC: openipmi (pulled in via ipmitool) always
+    # fails to load drivers and trips the NodeSystemdServiceFailed alert.
+    - name: Disable openipmi (no IPMI hardware)
+      ansible.builtin.systemd_service:
+        name: openipmi.service
+        enabled: false
+        state: stopped
+
+    - name: Clear failed state left by openipmi
+      ansible.builtin.command: systemctl reset-failed openipmi.service
+      register: reset_failed
+      changed_when: false
+      failed_when: false
