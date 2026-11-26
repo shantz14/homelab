@@ -17,6 +17,10 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
+  # Helm's upgrade left stale env (METALLB_BGP_TYPE=frr-k8s) on the live
+  # speaker/controller; correct live objects back to the rendered manifest.
+  driftDetection:
+    mode: enabled
   values:
     # L2-only setup: no BGP, so run the speaker in native mode instead of
     # the default frr-k8s backend (its FRR container crash-looped on pi01).
