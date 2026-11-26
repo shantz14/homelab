@@ -17,3 +17,8 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
+  values:
+    # L2-only setup: no BGP, so run the speaker in native mode instead of
+    # the default frr-k8s backend (its FRR container crash-looped on pi01).
+    frrk8s:
+      enabled: false
