@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idle-kings
+  namespace: idle-kings
+spec:
+  # Exactly one: two bots on one token would both answer every click,
+  # and SQLite has one writer. Recreate, never a rolling update.
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: idle-kings
+  template:
+    metadata:
+      labels:
+        app: idle-kings
+    spec:
+      # Keep the database (and its local-path volume) off the Pi's SD card;
+      # the image is amd64 only.
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: storage
+                    operator: NotIn
+                    values: ["sdcard"]
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      # The bot finishes its tick and waits for in-flight clicks on SIGTERM.
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: idle-kings
+          image: ghcr.io/shantz14/idle-kings:v0.1.0-alpha
+          env:
+            - name: IDLE_KINGS_DB
+              value: /data/idle-kings.db
+            - name: IDLE_KINGS_HEALTH_ADDR
+              value: ":8081"
+          envFrom:
+            - secretRef:
+                name: discord-token       # provides DISCORD_TOKEN
+          ports:
+            - name: health
+              containerPort: 8081
+          livenessProbe:                  # fails once the game loop stops ticking
+            httpGet:
+              path: /healthz
+              port: health
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: idle-kings-data

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: discord-token
+    namespace: idle-kings
+stringData:
+    DISCORD_TOKEN: ENC[AES256_GCM,data:6XUVNUe9gcQmp8ldh1fRH7DwzNnAPcsIDeMlFyoS2F5+vXhjK0ugUydoEyWx15HcPWOgyfYOLNHFKSJiDch/cPslb6RWY7Ho,iv:NG1GC2LMkWmbUqitoe2v3gt1OWXQh2Lx114HOm0snio=,tag:5jLote2EdzGbbL62IM8nOw==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBiaG5MZGlIczIxZk5VZ3VV
+            ck9xZ3ZuYnArY1N5QVBiYi8zT25tMXBHalJzCjBUZFhyNFNtaHlzOTBtR0pFbkk0
+            L3djdGh5NmVOeTUrWlQ0Q3VmOXVyZlUKLS0tIE5vNTMrcWd1aGl4SjBETmRPVlB1
+            Uk00czR1Umd4b2FPOWFSL2FNcG96cTgKlux1vrBl6ZycjNbgEDwanl9QU/wV73t3
+            fSYZsLT+LcvL2xlZYslUX1Xilr0m0F3Au3XCiuvrCLaqkLEqpWh4Lg==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age15fnakreare0w3490xpafffruk9jegm0kq5sdl84e07kz7k45gexsue3hg3
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-11-28T03:38:28Z"
+    mac: ENC[AES256_GCM,data:kETx9lAcg1uJsVEcjEaIFilJIPnyA+rYHn2B/pd0K/wOOYQUtTX62Bo6u3TqKlyuHo2xpXoaFnuIENfBj64MXcfVmj2KmLARrt0csqswKs/hc9gYziutYw9qcYhCgEP4PD31j+pGu8mK5to7WtTB1UVZoGczfFSIFVhY5WXhrf4=,iv:PUSXOsfJ0BcjvMYDFqIR1y4gzeFLkLOUXPYnrdITYS0=,tag:u6J3TEXm+faFfolpZC48fg==,type:str]
+    version: 3.13.3

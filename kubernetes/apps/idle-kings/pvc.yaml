@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: idle-kings-data
+  namespace: idle-kings
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled   # the game's database: never delete it with the app
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

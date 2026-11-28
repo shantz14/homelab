@@ -22,3 +22,4 @@ The lab sits on its own subnet, behind a GL.iNet Beryl AX in.
 ## Apps
 - **personal:** isaacschwarz.dev
 - **obsidian-sync:** CouchDB backing Obsidian Self-hosted LiveSync, see [docs/obsidian-sync.md](docs/obsidian-sync.md)
+- **idle-kings:** the [Idle Kings](https://github.com/shantz14/idle-kings) Discord bot: one pod, SQLite on a local-path volume off the Pi, Discord token in a SOPS secret
